@@ -2,32 +2,24 @@
 # https://adventofcode.com/2025/day/1
 
 def part1():
-    dial = 50
-    direction = []
-    distance = []
-
+    dial = 50  # Starting position of the dial
     number_of_times_turned = 0
 
     # Parse data from file
     with open("day1input.txt", "r") as file:
         for line in file:
-            direction.append(line[:1])
-            distance.append(int(line[1:]))
+            direction = -1 if line[:1] == 'L' else 1 # Left or Right
+            distance = int(line[1:])
 
-    for i in range(len(direction)):
-        # Turn the dial
-        if direction[i] == 'L':
-            dial -= distance[i]
-        elif direction[i] == 'R':
-            dial += distance[i]
+            # Turn the dial in the specified direction
+            dial += (direction * distance)
         
-        # Wrap around the dial
-        if dial < 0 or dial > 99:
+            # Wrap around the dial (to ensure it's always between 0 and 99)
             dial = dial % 100
-        
-        # Check if we've returned to 0
-        if dial == 0:
-            number_of_times_turned += 1
+            
+            # Check if we've returned to 0
+            if dial == 0:
+                number_of_times_turned += 1
 
     return number_of_times_turned
     
