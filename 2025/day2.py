@@ -1,5 +1,5 @@
-# {name}
-# {link}
+# Day 2: Gift Shop
+# https://adventofcode.com/2025/day/2
 
 def part1():
     ranges = []
@@ -9,28 +9,27 @@ def part1():
         # split by commas and store into an array
         ranges = file.read().strip().split(',')
     
-    ranges = [list(map(int, r.split('-'))) for r in ranges]
-
-    print(ranges)
-
-    # for each range, check each number in the range and see if it has a repeated sequence of digits
     invalid_count = 0
 
     for r in ranges:
-        print(r)
-        for number in range(r[0], r[1] + 1):
+        start, end = map(int, r.split('-'))
+
+        for number in range(start, end + 1):
             num_str = str(number)
-            has_repeated = False
+
+            num_length = len(num_str)
+
+            # we can skip all numbers with odd digit lengths
+            if num_length % 2 != 0:
+                continue
 
             # split it into half then compare the two halves
-            mid = len(num_str) // 2
+            mid = num_length // 2
             first_half = num_str[:mid]
             second_half = num_str[mid:]
 
             if first_half == second_half:
-                has_repeated = True
                 invalid_count += int(number)
-                print(f'Invalid number found: {number}')
 
     return invalid_count
 
